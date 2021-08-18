@@ -1,0 +1,6 @@
+Google('Cloud Platform', 'Note PC', 'Smart Phone', 'Search Engine')
+Microsoft('Note PC', 'Cloud Platform', 'CRM', 'MR')
+Apple('MR', 'Smart Phone', 'Music Store')
+Hitachi('Cloud Platform', 'Note PC')
+Fujistu('Note PC')
+NTT('Network')
