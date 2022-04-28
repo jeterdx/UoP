@@ -14,7 +14,7 @@ package turing;
  */
 public class Tape {
 	private Cell currentCell;
-
+	// Constructor to prepare data for cell.
 	public Tape() {
 		Cell new_Cell = new Cell();
 		new_Cell.content = ' ';
@@ -42,6 +42,7 @@ public class Tape {
 			Cell new_Cell = new Cell();
 			new_Cell.prev = null;
 			new_Cell.next = currentCell;
+			new_Cell.content = ' ';
 			currentCell.prev = new_Cell;
 			currentCell = new_Cell;
 		} else {
@@ -54,6 +55,7 @@ public class Tape {
 			Cell new_Cell = new Cell();
 			new_Cell.next = null;
 			new_Cell.prev = currentCell;
+			new_Cell.content = ' ';
 			currentCell.next = new_Cell;
 			currentCell = new_Cell;
 		} else {
