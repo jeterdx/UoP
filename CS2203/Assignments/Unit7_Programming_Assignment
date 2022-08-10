@@ -1,0 +1,426 @@
+Create Database hospital3;
+use hospital3;
+
+Create Table	Specialty(
+		SpecialtyNumber	char(10) Not Null,
+		SpecialtyName	char (40),
+CONSTRAINT pk_sn PRIMARY KEY (SpecialtyNumber),
+CONSTRAINT uq_sn Unique	(SpecialtyNumber)
+);
+
+Create Table Doctor(
+    DoctorID char(10) Not	Null,
+    Name char	(40) Not Null,
+    Phone	char (20)	Not	Null,
+    SpecialtyNumber	char(10) Not Null,
+    Supervisor char(10),
+CONSTRAINT pk_did PRIMARY	KEY	(DoctorID),
+CONSTRAINT uq_did Unique (DoctorID)
+);
+
+ALTER	TABLE	Doctor
+ADD	CONSTRAINT fk_Specialty	FOREIGN	KEY	(SpecialtyNumber)
+REFERENCES Specialty(SpecialtyNumber);
+
+Create Table Patient(
+  PatientID	char(10) Not Null,
+  DoctorID char(10) Not Null,
+  Name char(40) Not	Null,
+  Phone	char(20) Not	Null,
+  Email	char(40),
+  Address	char(100)	Not	Null,
+  AddedDate	date Not Null,
+CONSTRAINT pk_pid PRIMARY	KEY	(PatientID),
+CONSTRAINT uq_pid	Unique (PatientID),
+CONSTRAINT fk_doctor FOREIGN KEY (DoctorID) REFERENCES Doctor(DoctorID)
+);
+
+Create	Table	Allergy(
+  AllergyID	char(10) Not	Null,
+  AllergyName	char(40)	Not	Null,
+CONSTRAINT	pk_aid	PRIMARY	KEY	(AllergyID),
+CONSTRAINT	uq_aid	Unique	(AllergyID)
+);
+
+
+Create	Table	PatientAllergy(
+  AllergyID	char(10) Not	Null,
+  PatientID	char(10) Not	Null,
+CONSTRAINT	pk_apid	PRIMARY	KEY	(AllergyID,PatientID),
+CONSTRAINT	uq_apid	Unique	(AllergyID,PatientID),
+CONSTRAINT	fk_allergy	FOREIGN	KEY	(AllergyID)	REFERENCES	Allergy(AllergyID),
+CONSTRAINT	fk_patient	FOREIGN	KEY	(PatientID)	REFERENCES	Patient(PatientID)
+);
+
+
+Create	Table	Appointment(
+  AppointmentID	char(10) Not	Null,
+  PatientID	char(10) Not	Null,
+  DoctorID	char(10) Not	Null,
+  AppointmentDate	date Not	Null,
+  BloodPressure		smallint	Not	Null,
+  Weight decimal(5,2)	Not	Null,
+  TreatmentNotes	char(255)	Not	Null,
+CONSTRAINT	pk_appid	PRIMARY	KEY	(AppointmentID),
+CONSTRAINT	uq_appid	Unique	(AppointmentID),
+CONSTRAINT	fk_doctor_app	FOREIGN	KEY	(DoctorID)	REFERENCES	Doctor(DoctorID),
+CONSTRAINT	fk_patient_app	FOREIGN	KEY	(PatientID)	REFERENCES	Patient(PatientID)
+);
+
+Create	Table	Medicine(
+  MedicineID	char(10) Not	Null,
+  MedicineName	char	(40)	Not	Null,
+CONSTRAINT	pk_mid_pk	PRIMARY	KEY	(MedicineID),
+CONSTRAINT	uq_mid	Unique	(MedicineID)
+);
+
+Create	Table	PatientMedicine(
+  AppointmentID	char(10) Not	Null,
+  MedicineID	char(10) Not	Null,
+CONSTRAINT	pk_pmid	PRIMARY	KEY	(AppointmentID,MedicineID),
+CONSTRAINT	uq_pmid	Unique	(AppointmentID,MedicineID),
+CONSTRAINT	fk_appointment	FOREIGN	KEY	(AppointmentID)	REFERENCES
+Appointment(AppointmentID),
+CONSTRAINT	fk_medicine	FOREIGN	KEY	(MedicineID)	REFERENCES	Medicine(MedicineID)
+);
+
+
+mysql> show tables;
++---------------------+
+| Tables_in_hospital2 |
++---------------------+
+| allergy             |
+| appointment         |
+| doctor              |
+| medicine            |
+| patient             |
+| patientallergy      |
+| patientmedicine     |
+| specialty           |
++---------------------+
+8 rows in set (0.01 sec)
+
+
+INSERT INTO Specialty VALUES ("S1", "Dermatology");
+INSERT INTO Specialty VALUES ("S2", "Psychiatry");
+INSERT INTO Specialty VALUES ("S3", "Oncology");
+INSERT INTO Specialty VALUES ("S4", "Cardiology");
+INSERT INTO Specialty VALUES ("S5", "Urology");
+INSERT INTO Specialty VALUES ("S6", "Pediatrics");
+
+INSERT INTO Doctor VALUES ("D1", "Doctor Karen", "555-1212", "S6", "");
+INSERT INTO Doctor VALUES ("D2", "Doctor John", "555-2934", "S2", "D1");
+INSERT INTO Doctor VALUES ("D3", "Doctor Robert", "555-6723", "S6", "D1");
+INSERT INTO Doctor VALUES ("D4", "Doctor David", "555-1745", "S4", "D1");
+INSERT INTO Doctor VALUES ("D5", "Doctor Mary", "555-6565", "S5", "D1");
+INSERT INTO Doctor VALUES ("D6", "Doctor Linda", "555-4889", "S1", "D1");
+INSERT INTO Doctor VALUES ("D7", "Doctor Susan", "555-4581", "S3", "D1");
+INSERT INTO Doctor VALUES ("D8", "Doctor Zeynep", "555-7891", "S4", "D1");
+INSERT INTO Doctor VALUES ("D9", "Doctor Mat", "555-7791", "S1", "D1");
+
+INSERT INTO Patient VALUES ("P1", "D2", "Patient Dana", "444-1212", "P1@email.com", "123 Home St.", '2019-02-01');
+INSERT INTO Patient VALUES ("P2", "D2", "Patient Harry", "444-2934", "P2@email.com", "3435 Main St.", '2011-07-13');
+INSERT INTO Patient VALUES ("P3", "D6", "Patient Karl", "444-6723", "P3@email.com", "2176 Baker St. ", '2009-05-10');
+INSERT INTO Patient VALUES ("P4", "D2", "Patient Sid", "444-1745", "P4@email.com", "176 Right St.", '2010-06-10');
+INSERT INTO Patient VALUES ("P5", "D8", "Patient Marry", "444-6565", "P5@email.com", "435 Main St.", '2014-05-18');
+INSERT INTO Patient VALUES ("P6", "D6", "Patient Kim", "444-4889", "P6@email.com", "34 Home St.", '2011-09-07');
+INSERT INTO Patient VALUES ("P7", "D4", "Patient Susan", "444-4581", "P7@email.com", "65 Water St.", '2011-09-07');
+INSERT INTO Patient VALUES ("P8", "D3", "Patient Sam", "444-7891", "P8@email.com", "23 Hill Drive", '2010-11-23');
+INSERT INTO Patient VALUES ("P9", "D5", "Patient Peter", "444-7791", "P9@email.com", "12 River St.", '2008-02-01');
+INSERT INTO Patient VALUES ("P10", "D7", "Patient Nick", "123-1212", "P10@email.com", "335 Bay St.	", '2011-07-13');
+INSERT INTO Patient VALUES ("P11", "D9", "Patient Kyle", "123-2934", "P11@email.com", "216 Baker St.", '2016-05-10');
+INSERT INTO Patient VALUES ("P12", "D9", "Patient Garcia", "123-6723", "P12@email.com", "176 Right St.", '2010-06-20');
+INSERT INTO Patient VALUES ("P13", "D4", "Patient Alicia", "123-1745", "P13@email.com", "823 Left St.", '2015-05-18');
+INSERT INTO Patient VALUES ("P14", "D4", "Patient Dan", "123-6565", "P14@email.com", "534 High St.", '2018-03-15');
+
+INSERT INTO Appointment VALUES ("A1", "P1", "D2", '2019-07-01', 80, 65, "Dream to success");
+INSERT INTO Appointment VALUES ("A2", "P13", "D4", '2019-01-04', 77, 88, "Dream to success");
+INSERT INTO Appointment VALUES ("A3", "P11", "D9", '2019-03-22', 82, 95, "Many spots");
+INSERT INTO Appointment VALUES ("A4", "P7", "D4", '2020-02-01', 85, 74, "Fast heart rate");
+INSERT INTO Appointment VALUES ("A5", "P9", "D5", '2019-04-13', 75, 56, "Reports checked");
+INSERT INTO Appointment VALUES ("A6", "P3", "D6", '2019-11-12', 81, 96, "Sun light spots");
+INSERT INTO Appointment VALUES ("A7", "P10", "D7", '2020-01-29', 80, 87, "Early treatment");
+INSERT INTO Appointment VALUES ("A8", "P9", "D5", '2019-08-12', 86, 92, "Much better");
+INSERT INTO Appointment VALUES ("A9", "P14", "D4", '2019-05-18', 75, 75, "Good heart rate");
+INSERT INTO Appointment VALUES ("A10", "P8", "D3", '2019-11-18', 76, 79, "New teeth");
+INSERT INTO Appointment VALUES ("A11", "P11", "D9", '2019-06-22', 78, 71, "Much better");
+INSERT INTO Appointment VALUES ("A12", "P2", "D7", '2020-02-21', 82, 86, "Early treatment");
+INSERT INTO Appointment VALUES ("A13", "P4", "D2", '2019-08-17', 81, 101, "Bad dreams");
+INSERT INTO Appointment VALUES ("A14", "P6", "D6", '2019-06-27', 79, 49, "Sun light spots");
+INSERT INTO Appointment VALUES ("A15", "P7", "D7", '2020-07-29', 80, 83, "Early treatment");
+INSERT INTO Appointment VALUES ("A16", "P4", "D4", '2020-08-01', 78, 79, "Good heart rate");
+
+INSERT INTO Allergy  VALUES ("AL1", "Drug");
+INSERT INTO Allergy  VALUES ("AL2", "Food");
+INSERT INTO Allergy  VALUES ("AL3", "Skin");
+INSERT INTO Allergy  VALUES ("AL4", "Asthma");
+INSERT INTO Allergy  VALUES ("AL5", "Rhinitis");
+
+INSERT INTO PatientAllergy  VALUES ("AL4", "P1");
+INSERT INTO PatientAllergy  VALUES ("AL2", "P13");
+INSERT INTO PatientAllergy  VALUES ("AL3", "P11");
+INSERT INTO PatientAllergy  VALUES ("AL4", "P7");
+INSERT INTO PatientAllergy  VALUES ("AL5", "P9");
+INSERT INTO PatientAllergy  VALUES ("AL1", "P3");
+
+INSERT INTO Medicine   VALUES ("M1", "Ativan");
+INSERT INTO Medicine   VALUES ("M2", "Ibuprofen");
+INSERT INTO Medicine   VALUES ("M3", "Omeprazole");
+INSERT INTO Medicine   VALUES ("M4", "Metoprolol");
+INSERT INTO Medicine   VALUES ("M5", "Azithromycin");
+INSERT INTO Medicine   VALUES ("M6", "Codeine");
+
+INSERT INTO PatientMedicine  VALUES ("A15", "M1");
+INSERT INTO PatientMedicine  VALUES ("A2", "M6");
+INSERT INTO PatientMedicine  VALUES ("A8", "M3");
+INSERT INTO PatientMedicine  VALUES ("A6", "M3");
+INSERT INTO PatientMedicine  VALUES ("A15", "M2");
+INSERT INTO PatientMedicine  VALUES ("A10", "M6");
+INSERT INTO PatientMedicine  VALUES ("A10", "M2");
+INSERT INTO PatientMedicine  VALUES ("A4", "M5");
+INSERT INTO PatientMedicine  VALUES ("A3", "M5");
+INSERT INTO PatientMedicine  VALUES ("A1", "M2");
+
+mysql> select * from allergy;
++-----------+-------------+
+| AllergyID | AllergyName |
++-----------+-------------+
+| AL1       | Drug        |
+| AL2       | Food        |
+| AL3       | Skin        |
+| AL4       | Asthma      |
+| AL5       | Rhinitis    |
++-----------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from appointment;
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | BloodPressure | Weight | TreatmentNotes   |
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+| A1            | P1        | D2       | 2019-07-01      |            80 |  65.00 | Dream to success |
+| A10           | P8        | D3       | 2019-11-18      |            76 |  79.00 | New teeth        |
+| A11           | P11       | D9       | 2019-06-22      |            78 |  71.00 | Much better      |
+| A12           | P2        | D7       | 2020-02-21      |            82 |  86.00 | Early treatment  |
+| A13           | P4        | D2       | 2019-08-17      |            81 | 101.00 | Bad dreams       |
+| A14           | P6        | D6       | 2019-06-27      |            79 |  49.00 | Sun light spots  |
+| A15           | P7        | D7       | 2020-07-29      |            80 |  83.00 | Early treatment  |
+| A16           | P4        | D4       | 2020-08-01      |            78 |  79.00 | Good heart rate  |
+| A2            | P13       | D4       | 2019-01-04      |            77 |  88.00 | Dream to success |
+| A3            | P11       | D9       | 2019-03-22      |            82 |  95.00 | Many spots       |
+| A4            | P7        | D4       | 2020-02-01      |            85 |  74.00 | Fast heart rate  |
+| A5            | P9        | D5       | 2019-04-13      |            75 |  56.00 | Reports checked  |
+| A6            | P3        | D6       | 2019-11-12      |            81 |  96.00 | Sun light spots  |
+| A7            | P10       | D7       | 2020-01-29      |            80 |  87.00 | Early treatment  |
+| A8            | P9        | D5       | 2019-08-12      |            86 |  92.00 | Much better      |
+| A9            | P14       | D4       | 2019-05-18      |            75 |  75.00 | Good heart rate  |
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+16 rows in set (0.00 sec)
+
+mysql> select * from doctor;
++----------+---------------+----------+-----------------+------------+
+| DoctorID | Name          | Phone    | SpecialtyNumber | Supervisor |
++----------+---------------+----------+-----------------+------------+
+| D1       | Doctor Karen  | 555-1212 | S6              |            |
+| D2       | Doctor John   | 555-2934 | S2              | D1         |
+| D3       | Doctor Robert | 555-6723 | S6              | D1         |
+| D4       | Doctor David  | 555-1745 | S4              | D1         |
+| D5       | Doctor Mary   | 555-6565 | S5              | D1         |
+| D6       | Doctor Linda  | 555-4889 | S1              | D1         |
+| D7       | Doctor Susan  | 555-4581 | S3              | D1         |
+| D8       | Doctor Zeynep | 555-7891 | S4              | D1         |
+| D9       | Doctor Mat    | 555-7791 | S1              | D1         |
++----------+---------------+----------+-----------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from medicine;
++------------+--------------+
+| MedicineID | MedicineName |
++------------+--------------+
+| M1         | Ativan       |
+| M2         | Ibuprofen    |
+| M3         | Omeprazole   |
+| M4         | Metoprolol   |
+| M5         | Azithromycin |
+| M6         | Codeine      |
++------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patient;
++-----------+----------+----------------+----------+---------------+----------------+------------+
+| PatientID | DoctorID | Name           | Phone    | Email         | Address        | AddedDate  |
++-----------+----------+----------------+----------+---------------+----------------+------------+
+| P1        | D2       | Patient Dana   | 444-1212 | P1@email.com  | 123 Home St.   | 2019-02-01 |
+| P10       | D7       | Patient Nick   | 123-1212 | P10@email.com | 335 Bay St.           | 2011-07-13 |
+| P11       | D9       | Patient Kyle   | 123-2934 | P11@email.com | 216 Baker St.  | 2016-05-10 |
+| P12       | D9       | Patient Garcia | 123-6723 | P12@email.com | 176 Right St.  | 2010-06-20 |
+| P13       | D4       | Patient Alicia | 123-1745 | P13@email.com | 823 Left St.   | 2015-05-18 |
+| P14       | D4       | Patient Dan    | 123-6565 | P14@email.com | 534 High St.   | 2018-03-15 |
+| P2        | D2       | Patient Harry  | 444-2934 | P2@email.com  | 3435 Main St.  | 2011-07-13 |
+| P3        | D6       | Patient Karl   | 444-6723 | P3@email.com  | 2176 Baker St. | 2009-05-10 |
+| P4        | D2       | Patient Sid    | 444-1745 | P4@email.com  | 176 Right St.  | 2010-06-10 |
+| P5        | D8       | Patient Marry  | 444-6565 | P5@email.com  | 435 Main St.   | 2014-05-18 |
+| P6        | D6       | Patient Kim    | 444-4889 | P6@email.com  | 34 Home St.    | 2011-09-07 |
+| P7        | D4       | Patient Susan  | 444-4581 | P7@email.com  | 65 Water St.   | 2011-09-07 |
+| P8        | D3       | Patient Sam    | 444-7891 | P8@email.com  | 23 Hill Drive  | 2010-11-23 |
+| P9        | D5       | Patient Peter  | 444-7791 | P9@email.com  | 12 River St.   | 2008-02-01 |
++-----------+----------+----------------+----------+---------------+----------------+------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from patientallergy;
++-----------+-----------+
+| AllergyID | PatientID |
++-----------+-----------+
+| AL4       | P1        |
+| AL3       | P11       |
+| AL2       | P13       |
+| AL1       | P3        |
+| AL4       | P7        |
+| AL5       | P9        |
++-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patientmedicine;
++---------------+------------+
+| AppointmentID | MedicineID |
++---------------+------------+
+| A15           | M1         |
+| A1            | M2         |
+| A10           | M2         |
+| A15           | M2         |
+| A6            | M3         |
+| A8            | M3         |
+| A3            | M5         |
+| A4            | M5         |
+| A10           | M6         |
+| A2            | M6         |
++---------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from specialty;^C
+mysql> select * from allergy;
++-----------+-------------+
+| AllergyID | AllergyName |
++-----------+-------------+
+| AL1       | Drug        |
+| AL2       | Food        |
+| AL3       | Skin        |
+| AL4       | Asthma      |
+| AL5       | Rhinitis    |
++-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from appointment;
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | BloodPressure | Weight | TreatmentNotes   |
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+| A1            | P1        | D2       | 2019-07-01      |            80 |  65.00 | Dream to success |
+| A10           | P8        | D3       | 2019-11-18      |            76 |  79.00 | New teeth        |
+| A11           | P11       | D9       | 2019-06-22      |            78 |  71.00 | Much better      |
+| A12           | P2        | D7       | 2020-02-21      |            82 |  86.00 | Early treatment  |
+| A13           | P4        | D2       | 2019-08-17      |            81 | 101.00 | Bad dreams       |
+| A14           | P6        | D6       | 2019-06-27      |            79 |  49.00 | Sun light spots  |
+| A15           | P7        | D7       | 2020-07-29      |            80 |  83.00 | Early treatment  |
+| A16           | P4        | D4       | 2020-08-01      |            78 |  79.00 | Good heart rate  |
+| A2            | P13       | D4       | 2019-01-04      |            77 |  88.00 | Dream to success |
+| A3            | P11       | D9       | 2019-03-22      |            82 |  95.00 | Many spots       |
+| A4            | P7        | D4       | 2020-02-01      |            85 |  74.00 | Fast heart rate  |
+| A5            | P9        | D5       | 2019-04-13      |            75 |  56.00 | Reports checked  |
+| A6            | P3        | D6       | 2019-11-12      |            81 |  96.00 | Sun light spots  |
+| A7            | P10       | D7       | 2020-01-29      |            80 |  87.00 | Early treatment  |
+| A8            | P9        | D5       | 2019-08-12      |            86 |  92.00 | Much better      |
+| A9            | P14       | D4       | 2019-05-18      |            75 |  75.00 | Good heart rate  |
++---------------+-----------+----------+-----------------+---------------+--------+------------------+
+16 rows in set (0.00 sec)
+
+mysql> select * from doctor;
++----------+---------------+----------+-----------------+------------+
+| DoctorID | Name          | Phone    | SpecialtyNumber | Supervisor |
++----------+---------------+----------+-----------------+------------+
+| D1       | Doctor Karen  | 555-1212 | S6              |            |
+| D2       | Doctor John   | 555-2934 | S2              | D1         |
+| D3       | Doctor Robert | 555-6723 | S6              | D1         |
+| D4       | Doctor David  | 555-1745 | S4              | D1         |
+| D5       | Doctor Mary   | 555-6565 | S5              | D1         |
+| D6       | Doctor Linda  | 555-4889 | S1              | D1         |
+| D7       | Doctor Susan  | 555-4581 | S3              | D1         |
+| D8       | Doctor Zeynep | 555-7891 | S4              | D1         |
+| D9       | Doctor Mat    | 555-7791 | S1              | D1         |
++----------+---------------+----------+-----------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from medicine;
++------------+--------------+
+| MedicineID | MedicineName |
++------------+--------------+
+| M1         | Ativan       |
+| M2         | Ibuprofen    |
+| M3         | Omeprazole   |
+| M4         | Metoprolol   |
+| M5         | Azithromycin |
+| M6         | Codeine      |
++------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patient;
++-----------+----------+----------------+----------+---------------+----------------+------------+
+| PatientID | DoctorID | Name           | Phone    | Email         | Address        | AddedDate  |
++-----------+----------+----------------+----------+---------------+----------------+------------+
+| P1        | D2       | Patient Dana   | 444-1212 | P1@email.com  | 123 Home St.   | 2019-02-01 |
+| P10       | D7       | Patient Nick   | 123-1212 | P10@email.com | 335 Bay St.           | 2011-07-13 |
+| P11       | D9       | Patient Kyle   | 123-2934 | P11@email.com | 216 Baker St.  | 2016-05-10 |
+| P12       | D9       | Patient Garcia | 123-6723 | P12@email.com | 176 Right St.  | 2010-06-20 |
+| P13       | D4       | Patient Alicia | 123-1745 | P13@email.com | 823 Left St.   | 2015-05-18 |
+| P14       | D4       | Patient Dan    | 123-6565 | P14@email.com | 534 High St.   | 2018-03-15 |
+| P2        | D2       | Patient Harry  | 444-2934 | P2@email.com  | 3435 Main St.  | 2011-07-13 |
+| P3        | D6       | Patient Karl   | 444-6723 | P3@email.com  | 2176 Baker St. | 2009-05-10 |
+| P4        | D2       | Patient Sid    | 444-1745 | P4@email.com  | 176 Right St.  | 2010-06-10 |
+| P5        | D8       | Patient Marry  | 444-6565 | P5@email.com  | 435 Main St.   | 2014-05-18 |
+| P6        | D6       | Patient Kim    | 444-4889 | P6@email.com  | 34 Home St.    | 2011-09-07 |
+| P7        | D4       | Patient Susan  | 444-4581 | P7@email.com  | 65 Water St.   | 2011-09-07 |
+| P8        | D3       | Patient Sam    | 444-7891 | P8@email.com  | 23 Hill Drive  | 2010-11-23 |
+| P9        | D5       | Patient Peter  | 444-7791 | P9@email.com  | 12 River St.   | 2008-02-01 |
++-----------+----------+----------------+----------+---------------+----------------+------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from patientallergy;
++-----------+-----------+
+| AllergyID | PatientID |
++-----------+-----------+
+| AL4       | P1        |
+| AL3       | P11       |
+| AL2       | P13       |
+| AL1       | P3        |
+| AL4       | P7        |
+| AL5       | P9        |
++-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patientmedicine;
++---------------+------------+
+| AppointmentID | MedicineID |
++---------------+------------+
+| A15           | M1         |
+| A1            | M2         |
+| A10           | M2         |
+| A15           | M2         |
+| A6            | M3         |
+| A8            | M3         |
+| A3            | M5         |
+| A4            | M5         |
+| A10           | M6         |
+| A2            | M6         |
++---------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from specialty;
++-----------------+---------------+
+| SpecialtyNumber | SpecialtyName |
++-----------------+---------------+
+| S1              | Dermatology   |
+| S2              | Psychiatry    |
+| S3              | Oncology      |
+| S4              | Cardiology    |
+| S5              | Urology       |
+| S6              | Pediatrics    |
++-----------------+---------------+
+6 rows in set (0.00 sec)

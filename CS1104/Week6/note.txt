@@ -1,0 +1,11 @@
+c-instruction/A-instruction
+machine language
+latch/flipflop
+
+addressing mode
+https://medium-company.com/%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E6%8C%87%E5%AE%9A%E6%96%B9%E5%BC%8F/
+
+a-instruction : データをレジスタ上に格納する
+c-instruction : ALUとやり取りしてRegister上のデータを計算する
+
+Aレジスタはインプットをそのまま使う。Mレジスタはメモリ上の既存データを使う。その違いを表現しているのがa=0/1

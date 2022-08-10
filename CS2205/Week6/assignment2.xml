@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<personalinfo id="0">
+  <Basicinfo>
+    <name>Shohei Ohtani</name>
+    <job>
+      <occupation>Professional Baseball Player</occupation>
+      <team>
+        <team1>Hokkaido Nippon Fighters</team1>
+        <team2>Los Angeles Angels</team2>
+      </team>
+    </job>
+  </Basicinfo>
+
+
+  <hobbies>
+    <hobby>Playing Baseball</hobby>
+    <hobby>Watching Baseball</hobby>
+    <hobby>Teaching Baseball</hobby>
+  </hobbies>
+
+</personalinfo>

@@ -1,0 +1,19 @@
+lecture1
+- the concept of a-instruction or c-instruction we learned last week is the one used in Hack computer but the core is common to all computer architectures.
+- D;JGT: the result of the last operation executed on D register was grater than 0, jump to the address that is specified just prior to the line.
+- JLT means the jump less than 0, JEQ means the jump eaqual to 0.
+
+lecture2
+- TECS assembler
+
+
+Discussion forum
+
+The Hack assembler is a two-pass assembler. Explain why there is a need for going twice over the code.
+- The Hack assembler allows to use label symbols in order to define the symbol to refer to the instruction memory location that holds the next command in the program. This label can be used even before the line where the label is defined. This characteristic causes the problem of efficiency, since when assembler encounters the label which is not defined yet, the program has to hold the information of the label till finding actual definition line of the label. Then, after finding the label definition, the program returns to the previous part to execute the line that contains the symbol. As this flow of execution shows, it is not smart and efficient to complete all tasks with one scan. In order to solve this problem, two-pass assembler is used. This assembler scans all symbols to create a symbol table to refer when the program uses them with the first iteration. In the second iteration, an assembler compiles an instruction lines to machine languages with referring to the symbol table including the definition of label symbols.
+
+There is a method named backpatching that solves this issue with one pass only. Describe this method.
+- Backpatching is the solution to solve the issue of undefined symbol with one pass assembling. As the name of backpatching implies, when assembler encounters the undefined labels, it generates an instruction with blank. Then, after the definition of symbol is confirmed, the assembler goes back to complete the instructions. This is how backpatching works.
+
+What are the pros and cons for one pass assembly vs. two pass assembly?
+- If the backpatching can be implemented, it reduces the time to assemble the code since it only requires one scan, but the difficulty to implement the assembler is high. On the other hand, the two-pass assembler is more simple to implement since each scan role is straightforward. But it takes more time to execute since two scans must be completed.

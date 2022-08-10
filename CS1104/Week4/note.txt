@@ -1,0 +1,49 @@
+Sequential logic maintains state. 
+The work of remembering means to require of express the progression of time.
+
+The way to maintain state is to have looping input and output.
+This feedback can be controled through the idea of latch.
+
+The most elementary sequential element in the computer is a device called a flip-flop, of which there are several variants.
+DFF is one of the FFs, whose interface consists of a single-bit data input and a single-bit data output. In addition, the DFF has a clock input that continuously changes according to the master clock’s signal. Taken together, the data and the clock inputs enable the DFF to implement the time-based behavior.The small triangle represents the clock input.This icon is used to state that the marked chip, as well as the overall chip that encapsulates it,
+is time-dependent.
+
+DFF : out(t) = input(t-1) : 過去のインプットを保持して現在のアウトプットにする
+Register：out(t) = out(t-1) : 過去のアウトプットを保持して現在のアウトプットにする
+上記より、DFFのOutputを利用して、レジスタを作ることが出来ると分かる	
+
+FlipFlopについて概要
+https://www.youtube.com/watch?v=9i0KfZm7uY4
+RS-FFの挙動（RはReset, SはSet）
+https://www.youtube.com/watch?v=4vAGaWyGanU
+
+ラッチとフリップフロップは似て非なるもの -> クロックの有無が差
+フリップフロップ：ある瞬間の静止画しか出せない -> ある時点のスナップショットを取って保存して出力の繰り返し -> 言い換えると、回路の状態を保持するもの。
+ラッチ：ある瞬間の静止画も、ある瞬間以降の動画も両方出せる  -> ある時点のスナップショットだけじゃなく、リアルタイムでインプットをそのままアウトプットできる
+SRラッチ：2つの入力が0の状態から、Setを1にすると1が出力される。Setを1から0にしても1の状態が保持されるので、出力は1のまま。これが過去のインプットを現在アウトプットしている状態。Resetを1にすると、出力が0になり、Resetを0にしても出力0が維持される。
+
+じゃあDFFとD-Latchの違いは？
+DFF : out(t) = input(t-1) : 過去のインプットを保持して現在のアウトプットにする ※リアルタイムで入力を出力にすることはできない
+D-Latch：
+
+DラッチとFFの資料
+http://www.setsunan.ac.jp/~shikama/LogicCircuits2009/2011LC_4.pdf
+
+The usage of timechart is very important since the inputs of two 1 are not allowed in RS-FF.It is like to push the bottom of start and stop at the same time.
+
+===
+まとめると
+1. ラッチとフリップフロップはクロックの有無が差、ラッチがクロックありでフリップフロップは無し -> 過去の状態を保持することと、現在の状態を出力することができるかでいないか。
+2. DとRSは、両者とも2つの入力と1つの出力を持つが、RSがReset/Setによって状態を切り替えるだけなのに対して、Dで記憶したい情報を入力し、もう1つの入力で記憶するか否かを制御できる。
+
+RS-FF
+- 
+RS-ラッチ
+- 2つの入力が0の状態から、Setを1にすると1が出力される。Setを1から0にしても1の状態が保持されるので、出力は1のまま。これが過去のインプットを現在アウトプットしている状態。Resetを1にすると、出力が0になり、Resetを0にしても出力0が維持される。
+
+D-FF
+D-ラッチ
+
+一番わかりやすかったRSとDの違い
+https://xtech.nikkei.com/it/members/ITPro/ITBASIC/20021021/1/
+https://xtech.nikkei.com/it/members/ITPro/ITBASIC/20021016/1/

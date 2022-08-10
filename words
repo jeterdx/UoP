@@ -1,0 +1,6 @@
+- We wrote this book because we felt that many computer science students are **missing the forest for the trees**. : 木を見て森を見ず
+- The typical student is **marshaled** through a series of courses in programming, theory, and engineering, without pausing to appreciate the beauty of the picture at large. : 整列させられる。案内される。marshal自体が元帥・総統といった名詞が元になっている。
+- A course based on this book is **“perpendicular”** to the normal computer science curriculum and can be taken at almost any point during
+the program. : 直角に交わる。
+- The simplest way to specify a Boolean function is to **enumerate** all the possible values of the function’s input variables, along with the function’s output for each set of inputs. : 列挙する
+-

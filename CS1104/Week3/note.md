@@ -1,0 +1,6 @@
+- combinational circuits are memory-less, while sequential circutis does depend on the past executions.
+- The combinational circuit is time-independent. The output it generates does not depend on any of its previous inputs. On the other hand, sequential circuits are the ones that depend on clock cycles. They depend entirely on the past as well as the present inputs for generating output.
+- FA:Full Adder全加算機。全加算には3つのinputs(A, B, 下の桁からの桁上がり), 2つのoutputs(自身の桁と繰り上がりの数)になる。なので、1桁目の加算器は半加算機でOK。
+- 加減を1つの回路でまとめて表すことが出来る：SELという入力を使って、0のときは加算、1の時は減算になる。SELが0のときは全部素通りになる。1のときは足す数を全ビット反転して1を足す、という2の補数の足すということになり、引き算を実現している。
+- 分かってない：Signed Magnitude、MSB、decoder、NANDの汎用性
+- We know that 2 to 4 Decoder has two inputs, A1 & A0 and four outputs, Y3 to Y0. Whereas, 3 to 8 Decoder has three inputs A2, A1 & A0 and eight outputs, Y7 to Y0.

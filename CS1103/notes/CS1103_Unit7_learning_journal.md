@@ -1,0 +1,17 @@
+I am going to cover all answers to the questions below.
+
+##Describe what you did. This does not mean that you copy and paste from what you have posted or the assignments you have prepared. You need to describe what you did and how you did it.
+This week, I started my learning process with preparing for a programming assignment, since the concept of MVC was obviously important to me, not only in terms of getting a grade but also a basic concept of engineering. I did read through chapter13 of the textbook and read additional internet articles to make sure that my understanding is correct. But I did not jump into the programming assignment directly. After I got an image of the requirement this week, I proceeded to complete a self-quiz. Based on my experiences of the last 6 units, a self-quiz is a good opportunity to check an entire learning topic of this unit. Then, I found that my understanding of the GUI programming of Swing is not enough. In Particular, the relationship of MVC concepts and Java Swing objects took a little time to understand. So, I reviewed a textbook several times and used the example of the textbook as a topic of discussion forum this week. Then, I started to write a program of SimpleWebServer, which was one of the most interesting assignments. Since my curiosity is on the network and communication layer, it was really nice to practice how to implement a web server. Finally, I am writing this learning journal as a last assignment of this week.
+
+##Describe your reactions to what you did.
+I am satisfied with what I have done in this unit. I was struggling to follow all topics of advanced GUI programming of this unit, since I am not attracted by the topic itself, but an explanation of concepts associated with the topic of MVC helped me to be highly motivated.
+
+##Describe any feedback you received or any specific interactions you had. Discuss how they were helpful.
+Although it is not a direct feedback from my peers, the most helpful information I got this week was a programming assignment of my peers. When I reviewed assignments that were assigned to me, I found many great creativities in the assignment of additional features of the last assignment. As I do recognize myself not good at creativity, I was not satisfied with my idea that I worked on. Therefore, finding new insights such as changing color or rotating a degree of inputs was a really good opportunity to learn.
+
+
+##Describe your feelings and attitudes
+My feeling on this week's work stays as positive as last week. Since this week's MVC topic and programming assignment of a simple web server was in the middle of my curiosity, I was highly motivated. Although it was a little bit tough to handle a concept of connection or socket, following an assignment guideline helped me a lot to know how to implement a usual requirement of a web server such as error handling, file reading and writing or socket closing and so forth.
+
+##What happened that felt particularly challenging? Why was it challenging to me? What skills and knowledge do I recognize that I am gaining?
+My biggest challenge this week was the very basic part. When I wrote a code for a programming assignment, my code to judge a string of “GET” from a client request did not work well. After debugging a few times, I found String is not a primitive type which can be compared, but an object type which cannot be compared with “=” operator. Then, I realized that I should use equal() method to compare strings. This is what I struggled with the most.
